@@ -12,7 +12,7 @@ class FormLogin extends Component {
     const { history } = this.props;
     const requireApi = await fetch('https://opentdb.com/api_token.php?command=request');
     const tokenApi = await requireApi.json();
-    console.log(history);
+    localStorage.setItem('token', tokenApi.token);
     return history.push('/game');
   };
 
