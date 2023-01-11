@@ -11,6 +11,12 @@ class FormLogin extends Component {
     buttonEnabled: false,
   };
 
+  APIRequired = async () => {
+    const requireApi = await fetch('https://opentdb.com/api_token.php?command=request');
+    const tokenApi = await requireApi.json();
+    localStorage.setItem('token', tokenApi.token);
+  };
+
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
@@ -26,11 +32,12 @@ class FormLogin extends Component {
     });
   };
 
-  handleClick = () => {
+  handleClick = async () => {
     const { email, name } = this.state;
     const { dispatch, history } = this.props;
     const hash = md5(email).toString();
     dispatch(actionSaveUserInfo({ name, email, hash }));
+    await this.APIRequired();
     history.push('/game');
   };
 
@@ -69,7 +76,6 @@ class FormLogin extends Component {
           type="button"
         >
           Play
-
         </button>
 
       </form>
