@@ -11,12 +11,10 @@ class FormLogin extends Component {
     buttonEnabled: false,
   };
 
-  handleClick = async () => {
-    const { history } = this.props;
+  APIRequired = async () => {
     const requireApi = await fetch('https://opentdb.com/api_token.php?command=request');
     const tokenApi = await requireApi.json();
     localStorage.setItem('token', tokenApi.token);
-    return history.push('/game');
   };
 
   handleChange = (event) => {
@@ -39,6 +37,7 @@ class FormLogin extends Component {
     const { dispatch, history } = this.props;
     const hash = md5(email).toString();
     dispatch(actionSaveUserInfo({ name, email, hash }));
+    this.APIRequired();
     history.push('/game');
   };
 
