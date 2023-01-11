@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class FormLogin extends Component {
   state = {
     email: '',
     name: '',
     buttonEnabled: false,
+  };
+
+  handleClick = async () => {
+    const { history } = this.props;
+    const requireApi = await fetch('https://opentdb.com/api_token.php?command=request');
+    const tokenApi = await requireApi.json();
+    console.log(history);
+    return history.push('/game');
   };
 
   handleChange = (event) => {
@@ -51,6 +60,7 @@ class FormLogin extends Component {
         </label>
 
         <button
+          onClick={ this.handleClick }
           disabled={ !buttonEnabled }
           data-testid="btn-play"
           type="button"
@@ -63,5 +73,11 @@ class FormLogin extends Component {
     );
   }
 }
+
+FormLogin.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default FormLogin;
