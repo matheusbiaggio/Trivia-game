@@ -41,6 +41,11 @@ class FormLogin extends Component {
     history.push('/game');
   };
 
+  handleClickSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  };
+
   render() {
     const { email, name, buttonEnabled } = this.state;
     return (
@@ -76,6 +81,14 @@ class FormLogin extends Component {
           type="button"
         >
           Play
+        </button>
+
+        <button
+          onClick={ this.handleClickSettings }
+          data-testid="btn-settings"
+          type="button"
+        >
+          Configurações
         </button>
 
       </form>
