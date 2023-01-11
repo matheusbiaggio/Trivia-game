@@ -32,12 +32,12 @@ class FormLogin extends Component {
     });
   };
 
-  handleClick = () => {
+  handleClick = async () => {
     const { email, name } = this.state;
     const { dispatch, history } = this.props;
     const hash = md5(email).toString();
     dispatch(actionSaveUserInfo({ name, email, hash }));
-    this.APIRequired();
+    await this.APIRequired();
     history.push('/game');
   };
 
