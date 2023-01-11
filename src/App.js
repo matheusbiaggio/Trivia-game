@@ -9,7 +9,7 @@ export default function App() {
     <div className="App">
       <Switch>
         <Route path="/" exact component={ Login } />
-        <Route path="/game" exact component={ Game } />
+        <Route path="/game" component={ Game } />
       </Switch>
     </div>
   );

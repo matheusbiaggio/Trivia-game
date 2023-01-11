@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
+import { actionSaveUserInfo } from '../redux/actions';
 
 class FormLogin extends Component {
   state = {
@@ -29,6 +32,14 @@ class FormLogin extends Component {
     this.setState({
       buttonEnabled: verify,
     });
+  };
+
+  handleClick = () => {
+    const { email, name } = this.state;
+    const { dispatch, history } = this.props;
+    const hash = md5(email).toString();
+    dispatch(actionSaveUserInfo({ name, email, hash }));
+    history.push('/game');
   };
 
   render() {
@@ -66,7 +77,6 @@ class FormLogin extends Component {
           type="button"
         >
           Play
-
         </button>
 
       </form>
@@ -75,9 +85,10 @@ class FormLogin extends Component {
 }
 
 FormLogin.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
 };
 
-export default FormLogin;
+export default connect()(FormLogin);
