@@ -90,7 +90,6 @@ class FormLogin extends Component {
         >
           Configurações
         </button>
-
       </form>
     );
   }
