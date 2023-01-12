@@ -11,6 +11,7 @@ class Game extends Component {
   state = {
     questions: [],
     index: 0,
+    answered: false,
   };
 
   componentDidMount() {
@@ -18,12 +19,13 @@ class Game extends Component {
   }
 
   handlerClickAnswer = () => {
-    const elementosIncorretos = document.querySelectorAll('.incorrect');
-    const elementoCorreto = document.querySelector('.correct');
-    elementoCorreto.classList.add('green');
-    elementosIncorretos.forEach((e) => {
-      e.classList.add('red');
+    const incorrectAnswers = document.querySelectorAll('.incorrect');
+    const correctAnswer = document.querySelector('.correct');
+    correctAnswer.classList.add('green');
+    incorrectAnswers.forEach((answer) => {
+      answer.classList.add('red');
     });
+    this.setState({ answered: true });
   };
 
   fetchQuestions = async () => {
@@ -135,12 +137,34 @@ class Game extends Component {
     return numbers;
   };
 
+  handleClickNext = () => {
+    const { index } = this.state;
+    const { history } = this.props;
+    if (index === NUMBER_FOUR) history.push('/feedback');
+
+    const incorrectAnswers = document.querySelectorAll('.incorrect');
+    const correctAnswer = document.querySelector('.correct');
+    correctAnswer.classList.remove('green');
+
+    incorrectAnswers.forEach((answer) => {
+      answer.classList.remove('red');
+    });
+
+    this.setState((prevState) => ({
+      index: prevState.index + 1,
+      answered: false,
+    }));
+  };
+
   render() {
-    const { index, questions } = this.state;
+    const { index, questions, answered } = this.state;
     return (
       <div>
         <Header />
         { Boolean(questions.length) && this.createQuestionElement(questions[index]) }
+        { answered && (
+          <button onClick={ this.handleClickNext } type="button">Next</button>
+        ) }
       </div>
     );
   }
