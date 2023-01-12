@@ -163,7 +163,13 @@ class Game extends Component {
         <Header />
         { Boolean(questions.length) && this.createQuestionElement(questions[index]) }
         { answered && (
-          <button onClick={ this.handleClickNext } type="button">Next</button>
+          <button
+            onClick={ this.handleClickNext }
+            data-testid="btn-next"
+            type="button"
+          >
+            Next
+          </button>
         ) }
       </div>
     );
