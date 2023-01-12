@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 import '../css/game.css';
 
 const NUMBER_TWO = 2;
@@ -15,6 +17,11 @@ class Game extends Component {
 
   componentDidMount() {
     this.fetchQuestions();
+  }
+
+  componentDidUpdate() {
+    const { isOver } = this.props;
+    if (isOver) this.handlerClickAnswer();
   }
 
   handlerClickAnswer = () => {
@@ -48,10 +55,12 @@ class Game extends Component {
     incorrect_answers: incorrect,
     correct_answer: correct,
   }) => {
+    const { isOver } = this.props;
     if (type === 'boolean') {
       const twoRandomNumbers = this.randomNumbers(NUMBER_TWO);
       const answers = [(
         <button
+          disabled={ isOver }
           onClick={ this.handlerClickAnswer }
           data-testid={ correct === 'True' ? 'wrong-answer-0' : 'correct-answer' }
           className={ correct === 'True' ? 'incorrect' : 'correct' }
@@ -63,6 +72,7 @@ class Game extends Component {
       ),
       (
         <button
+          disabled={ isOver }
           className={ correct === 'True' ? 'correct' : 'incorrect' }
           onClick={ this.handlerClickAnswer }
           key="true"
@@ -87,6 +97,7 @@ class Game extends Component {
     const incorrectAnswers = incorrect
       .map((answer, index) => (
         <button
+          disabled={ isOver }
           className={ correct === 'True' ? 'correct' : 'incorrect' }
           onClick={ this.handlerClickAnswer }
           key={ `${answer[0]}${index}` }
@@ -99,6 +110,7 @@ class Game extends Component {
 
     const correctAnswer = [...incorrectAnswers, (
       <button
+        disabled={ isOver }
         className={ correct === 'True' ? 'incorrect' : 'correct' }
         onClick={ this.handlerClickAnswer }
         key="correct-answer"
@@ -140,6 +152,7 @@ class Game extends Component {
     return (
       <div>
         <Header />
+        <Timer />
         { Boolean(questions.length) && this.createQuestionElement(questions[index]) }
       </div>
     );
@@ -150,6 +163,11 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  isOver: PropTypes.bool.isRequired,
 };
 
-export default Game;
+const mapStateToProps = ({ timer }) => ({
+  isOver: timer.timerOver,
+});
+
+export default connect(mapStateToProps)(Game);
