@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Header from '../components/Header';
+import '../css/game.css';
 
 const NUMBER_TWO = 2;
 const NUMBER_THREE = 3;
@@ -15,6 +16,15 @@ class Game extends Component {
   componentDidMount() {
     this.fetchQuestions();
   }
+
+  handlerClickAnswer = () => {
+    const elementosIncorretos = document.querySelectorAll('.incorrect');
+    const elementoCorreto = document.querySelector('.correct');
+    elementoCorreto.classList.add('green');
+    elementosIncorretos.forEach((e) => {
+      e.classList.add('red');
+    });
+  };
 
   fetchQuestions = async () => {
     const { history } = this.props;
@@ -40,10 +50,11 @@ class Game extends Component {
   }) => {
     if (type === 'boolean') {
       const twoRandomNumbers = this.randomNumbers(NUMBER_TWO);
-
       const answers = [(
         <button
+          onClick={ this.handlerClickAnswer }
           data-testid={ correct === 'True' ? 'wrong-answer-0' : 'correct-answer' }
+          className={ correct === 'True' ? 'incorrect' : 'correct' }
           type="button"
           key="false"
         >
@@ -52,6 +63,8 @@ class Game extends Component {
       ),
       (
         <button
+          className={ correct === 'True' ? 'correct' : 'incorrect' }
+          onClick={ this.handlerClickAnswer }
           key="true"
           data-testid={ correct === 'True' ? 'correct-answer' : 'wrong-answer-0' }
           type="button"
@@ -74,6 +87,8 @@ class Game extends Component {
     const incorrectAnswers = incorrect
       .map((answer, index) => (
         <button
+          className={ correct === 'True' ? 'correct' : 'incorrect' }
+          onClick={ this.handlerClickAnswer }
           key={ `${answer[0]}${index}` }
           type="button"
           data-testid={ `wrong-answer-${index}` }
@@ -84,6 +99,8 @@ class Game extends Component {
 
     const correctAnswer = [...incorrectAnswers, (
       <button
+        className={ correct === 'True' ? 'incorrect' : 'correct' }
+        onClick={ this.handlerClickAnswer }
         key="correct-answer"
         type="button"
         data-testid="correct-answer"
