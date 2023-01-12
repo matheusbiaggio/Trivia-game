@@ -11,7 +11,7 @@ class FormLogin extends Component {
     buttonEnabled: false,
   };
 
-  APIRequired = async () => {
+  getTriviaToken = async () => {
     const requireApi = await fetch('https://opentdb.com/api_token.php?command=request');
     const tokenApi = await requireApi.json();
     localStorage.setItem('token', tokenApi.token);
@@ -37,7 +37,7 @@ class FormLogin extends Component {
     const { dispatch, history } = this.props;
     const hash = md5(email).toString();
     dispatch(actionSaveUserInfo({ name, email, hash }));
-    await this.APIRequired();
+    await this.getTriviaToken();
     history.push('/game');
   };
 
