@@ -7,9 +7,14 @@ import Header from '../components/Header';
 const NUMBER_THREE = 3;
 
 class Feedback extends Component {
-  playAgain = () => {
+  redirectPlayAgain = () => {
     const { history } = this.props;
     history.push('/');
+  };
+
+  redirectRanking = () => {
+    const { history } = this.props;
+    history.push('/ranking');
   };
 
   render() {
@@ -26,9 +31,16 @@ class Feedback extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={ this.playAgain }
+          onClick={ this.redirectPlayAgain }
         >
           Play Again
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ this.redirectRanking }
+        >
+          Ranking
         </button>
       </div>
     );
