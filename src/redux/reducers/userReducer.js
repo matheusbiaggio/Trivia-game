@@ -1,4 +1,4 @@
-import { SAVE_USER_INFO } from '../actions';
+import { CORRECT_ANSWER, SAVE_USER_INFO } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -16,6 +16,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       name: action.payload.name,
       gravatarEmail: action.payload.email,
       hash: action.payload.hash,
+    };
+  case CORRECT_ANSWER:
+    return {
+      ...state,
+      score: state.score + action.payload,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
