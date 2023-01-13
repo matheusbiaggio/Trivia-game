@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionChangeUrl } from '../redux/actions';
+import triviaCategories from '../services/triviaCategories';
 
 const NUMBER_FIFTY = 50;
 
@@ -16,10 +17,10 @@ class Settings extends Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('https://opentdb.com/api_category.php');
-    const data = await response.json();
-
-    this.setState({ categories: data.trivia_categories });
+    // const response = await fetch('https://opentdb.com/api_category.php');
+    // const data = await response.json();
+    // this.setState({ categories: data.trivia_categories });
+    this.setState({ categories: triviaCategories });
   }
 
   handleChange = ({ target }) => {

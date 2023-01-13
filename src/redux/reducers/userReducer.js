@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   score: 0,
   gravatarEmail: '',
   hash: '',
-  url: 'https://opentdb.com/api.php?amount=5&category=&difficulty=&type=&token=',
+  url: 'https://opentdb.com/api.php?amount=5&token=',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
