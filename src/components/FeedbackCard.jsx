@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class FeedbackCard extends Component {
@@ -10,7 +10,7 @@ class FeedbackCard extends Component {
         <p>
           {'Você acertou '}
           <span
-            data-testid="feedback-total-score"
+            data-testid="feedback-total-question"
           >
             { assertions }
           </span>
@@ -19,7 +19,7 @@ class FeedbackCard extends Component {
         <p>
           {'Você fez '}
           <span
-            data-testid="feedback-total-question"
+            data-testid="feedback-total-score"
           >
             { score }
           </span>
