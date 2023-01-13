@@ -1,4 +1,4 @@
-import { CORRECT_ANSWER, SAVE_USER_INFO } from '../actions';
+import { CHANGE_URL, CORRECT_ANSWER, SAVE_USER_INFO } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   score: 0,
   gravatarEmail: '',
   hash: '',
+  url: 'https://opentdb.com/api.php?amount=5&category=&difficulty=&type=&token=',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -17,6 +18,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
       gravatarEmail: action.payload.email,
       hash: action.payload.hash,
     };
+
+  case CHANGE_URL:
+    return {
+      ...state,
+      url: action.payload,
+    };
+
   case CORRECT_ANSWER:
     return {
       ...state,

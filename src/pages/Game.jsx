@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import '../css/game.css';
 import { actionCorrectAnswer, actionTimerRestart } from '../redux/actions';
+import fetchQuestions from '../services';
 
 const NUMBER_TWO = 2;
 const NUMBER_THREE = 3;
@@ -20,8 +21,17 @@ class Game extends Component {
     resetTimer: true,
   };
 
-  componentDidMount() {
-    this.fetchQuestions();
+  async componentDidMount() {
+    const { history, url } = this.props;
+    const token = localStorage.getItem('token');
+    const APIResponse = await fetchQuestions(`${url}${token}`);
+
+    if (APIResponse.response_code === NUMBER_THREE) {
+      localStorage.removeItem('token');
+      history.push('/');
+    }
+
+    this.setState({ questions: APIResponse.results });
   }
 
   componentDidUpdate() {
@@ -44,21 +54,6 @@ class Game extends Component {
     this.setState({ answered: true }, () => {
       if (event && !event.target.className.includes('incorrect')) this.sumPoints();
     });
-  };
-
-  fetchQuestions = async () => {
-    const { history } = this.props;
-    const token = localStorage.getItem('token');
-
-    const apiResponse = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-    const data = (await apiResponse.json());
-
-    if (data.response_code === NUMBER_THREE) {
-      localStorage.removeItem('token');
-      history.push('/');
-    }
-
-    this.setState({ questions: data.results });
   };
 
   boolQuestion = ({
@@ -240,11 +235,13 @@ Game.propTypes = {
   }).isRequired,
   isOver: PropTypes.bool.isRequired,
   stoppedTimer: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ timer }) => ({
+const mapStateToProps = ({ timer, player }) => ({
   isOver: timer.timerOver,
   stoppedTimer: timer.stoppedTimer,
+  url: player.url,
 });
 
 export default connect(mapStateToProps)(Game);
