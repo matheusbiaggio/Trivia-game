@@ -1,4 +1,4 @@
-import { CORRECT_ANSWER, SAVE_USER_INFO } from '../actions';
+import { CORRECT_ANSWER, RESET_GAME, SAVE_USER_INFO } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -22,6 +22,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       ...state,
       score: state.score + action.payload,
       assertions: state.assertions + 1,
+    };
+  case RESET_GAME:
+    return {
+      ...state,
+      score: 0,
+      assertions: 0,
     };
   default:
     return state;
