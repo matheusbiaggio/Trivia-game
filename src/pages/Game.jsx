@@ -25,12 +25,10 @@ class Game extends Component {
     const { history, url } = this.props;
     const token = localStorage.getItem('token');
     const APIResponse = await fetchQuestions(`${url}${token}`);
-
     if (APIResponse.response_code === NUMBER_THREE) {
       localStorage.removeItem('token');
       history.push('/');
     }
-
     this.setState({ questions: APIResponse.results });
   }
 
@@ -45,9 +43,7 @@ class Game extends Component {
   handlerClickAnswer = (event) => {
     const incorrectAnswers = document.querySelectorAll('.incorrect');
     const correctAnswer = document.querySelector('.correct');
-
     correctAnswer.classList.add('green');
-
     incorrectAnswers.forEach((answer) => {
       answer.classList.add('red');
     });
@@ -64,7 +60,6 @@ class Game extends Component {
     const { isOver } = this.props;
     const { answered } = this.state;
     const twoRandomNumbers = this.randomNumbers(NUMBER_TWO);
-
     const answers = [(
       <button
         disabled={ isOver || answered }
@@ -89,7 +84,6 @@ class Game extends Component {
         True
       </button>
     )];
-
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -111,9 +105,7 @@ class Game extends Component {
     } = ask;
     const { isOver } = this.props;
     const { answered } = this.state;
-
     if (type === 'boolean') return this.boolQuestion(ask);
-
     const incorrectAnswers = incorrect
       .map((answer, index) => (
         <button
@@ -127,7 +119,6 @@ class Game extends Component {
           { answer }
         </button>
       ));
-
     const correctAnswer = [...incorrectAnswers, (
       <button
         disabled={ isOver || answered }
@@ -183,7 +174,6 @@ class Game extends Component {
     incorrectAnswers.forEach((answer) => {
       answer.classList.remove('red');
     });
-
     this.setState((prevState) => ({
       index: prevState.index + 1,
       answered: false,
