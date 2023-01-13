@@ -1,4 +1,4 @@
-import { STOP_TIMER, TIMER_OVER } from '../actions';
+import { STOP_TIMER, TIMER_OVER, TIMER_RESTART } from '../actions';
 
 const INITIAL_STATE = {
   timerOver: false,
@@ -11,6 +11,11 @@ const timerReducer = (state = INITIAL_STATE, action) => {
     return ({
       ...state,
       timerOver: true,
+    });
+  case TIMER_RESTART:
+    return ({
+      ...state,
+      timerOver: false,
     });
   case STOP_TIMER:
     return {

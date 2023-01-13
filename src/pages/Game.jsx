@@ -4,19 +4,20 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import '../css/game.css';
-import { actionCorrectAnswer } from '../redux/actions';
+import { actionCorrectAnswer, actionTimerRestart } from '../redux/actions';
 
 const NUMBER_TWO = 2;
 const NUMBER_THREE = 3;
 const NUMBER_FOUR = 4;
 const NUMBER_TEN = 10;
+const NUMBER_FIFTY = 50;
 
 class Game extends Component {
   state = {
     questions: [],
     index: 0,
     answered: false,
-    resetTimer: false,
+    resetTimer: true,
   };
 
   componentDidMount() {
@@ -24,8 +25,11 @@ class Game extends Component {
   }
 
   componentDidUpdate() {
-    const { isOver } = this.props;
-    if (isOver) this.handlerClickAnswer();
+    const { isOver, dispatch } = this.props;
+    if (isOver) {
+      this.handlerClickAnswer();
+      dispatch(actionTimerRestart());
+    }
   }
 
   handlerClickAnswer = (event) => {
@@ -37,9 +41,8 @@ class Game extends Component {
     incorrectAnswers.forEach((answer) => {
       answer.classList.add('red');
     });
-
     this.setState({ answered: true }, () => {
-      if (!event.target.className.includes('incorrect')) this.sumPoints();
+      if (event && !event.target.className.includes('incorrect')) this.sumPoints();
     });
   };
 
@@ -142,9 +145,7 @@ class Game extends Component {
         { correct }
       </button>
     )];
-
     const fourRandomNumbers = this.randomNumbers(NUMBER_FOUR);
-
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -160,12 +161,10 @@ class Game extends Component {
 
   randomNumbers = (quantity) => {
     const numbers = [];
-
     while (numbers.length < quantity) {
       const number = Math.floor(Math.random() * quantity);
       if (!numbers.includes(number)) numbers.push(number);
     }
-
     return numbers;
   };
 
@@ -173,11 +172,9 @@ class Game extends Component {
     const { index } = this.state;
     const { history } = this.props;
     if (index === NUMBER_FOUR) history.push('/feedback');
-
     const incorrectAnswers = document.querySelectorAll('.incorrect');
     const correctAnswer = document.querySelector('.correct');
     correctAnswer.classList.remove('green');
-
     incorrectAnswers.forEach((answer) => {
       answer.classList.remove('red');
     });
@@ -185,19 +182,18 @@ class Game extends Component {
     this.setState((prevState) => ({
       index: prevState.index + 1,
       answered: false,
-      resetTimer: true,
-    }));
+      resetTimer: false,
+    }), () => {
+      this.setState({ resetTimer: true });
+    });
   };
 
   sumPoints = () => {
     setTimeout(() => {
       const { stoppedTimer, dispatch } = this.props;
       const { index, questions } = this.state;
-
       const { difficulty } = questions[index];
-
       let difficultyPoints;
-
       switch (difficulty) {
       case 'easy':
         difficultyPoints = 1;
@@ -211,13 +207,9 @@ class Game extends Component {
       default:
         break;
       }
-
-      console.log(difficulty);
-
       const total = NUMBER_TEN + (stoppedTimer * difficultyPoints);
-
       dispatch(actionCorrectAnswer(total));
-    }, 100);
+    }, NUMBER_FIFTY);
   };
 
   render() {
@@ -225,9 +217,7 @@ class Game extends Component {
     return (
       <div>
         <Header />
-
-        { resetTimer ? <Timer answered={ answered } number="1" /> : <Timer answered={ answered } number="2" /> }
-
+        { resetTimer && <Timer answered={ answered } /> }
         { Boolean(questions.length) && this.createQuestionElement(questions[index]) }
         { answered && (
           <button

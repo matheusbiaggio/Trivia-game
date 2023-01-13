@@ -41,9 +41,8 @@ class Timer extends Component {
 
   render() {
     const { timer } = this.state;
-    const { number } = this.props;
     return (
-      <div id={ number }>{timer}</div>
+      <div>{timer}</div>
     );
   }
 }
