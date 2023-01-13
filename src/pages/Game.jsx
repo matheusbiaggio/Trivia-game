@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import '../css/game.css';
 import { actionCorrectAnswer, actionTimerRestart } from '../redux/actions';
+import { setLocalStorage, fetchQuestions } from '../services';
 
 const NUMBER_TWO = 2;
 const NUMBER_THREE = 3;
@@ -20,8 +21,15 @@ class Game extends Component {
     resetTimer: true,
   };
 
-  componentDidMount() {
-    this.fetchQuestions();
+  async componentDidMount() {
+    const { history, url } = this.props;
+    const token = localStorage.getItem('token');
+    const APIResponse = await fetchQuestions(`${url}${token}`);
+    if (APIResponse.response_code === NUMBER_THREE) {
+      localStorage.removeItem('token');
+      history.push('/');
+    }
+    this.setState({ questions: APIResponse.results });
   }
 
   componentDidUpdate() {
@@ -35,30 +43,13 @@ class Game extends Component {
   handlerClickAnswer = (event) => {
     const incorrectAnswers = document.querySelectorAll('.incorrect');
     const correctAnswer = document.querySelector('.correct');
-
     correctAnswer.classList.add('green');
-
     incorrectAnswers.forEach((answer) => {
       answer.classList.add('red');
     });
     this.setState({ answered: true }, () => {
       if (event && !event.target.className.includes('incorrect')) this.sumPoints();
     });
-  };
-
-  fetchQuestions = async () => {
-    const { history } = this.props;
-    const token = localStorage.getItem('token');
-
-    const apiResponse = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-    const data = (await apiResponse.json());
-
-    if (data.response_code === NUMBER_THREE) {
-      localStorage.removeItem('token');
-      history.push('/');
-    }
-
-    this.setState({ questions: data.results });
   };
 
   boolQuestion = ({
@@ -69,7 +60,6 @@ class Game extends Component {
     const { isOver } = this.props;
     const { answered } = this.state;
     const twoRandomNumbers = this.randomNumbers(NUMBER_TWO);
-
     const answers = [(
       <button
         disabled={ isOver || answered }
@@ -94,7 +84,6 @@ class Game extends Component {
         True
       </button>
     )];
-
     return (
       <div>
         <p data-testid="question-category">{ category }</p>
@@ -116,9 +105,7 @@ class Game extends Component {
     } = ask;
     const { isOver } = this.props;
     const { answered } = this.state;
-
     if (type === 'boolean') return this.boolQuestion(ask);
-
     const incorrectAnswers = incorrect
       .map((answer, index) => (
         <button
@@ -132,7 +119,6 @@ class Game extends Component {
           { answer }
         </button>
       ));
-
     const correctAnswer = [...incorrectAnswers, (
       <button
         disabled={ isOver || answered }
@@ -170,15 +156,24 @@ class Game extends Component {
 
   handleClickNext = () => {
     const { index } = this.state;
-    const { history } = this.props;
-    if (index === NUMBER_FOUR) history.push('/feedback');
+    const { history, name, hash, score } = this.props;
+    if (index === NUMBER_FOUR) {
+      history.push('/feedback');
+      setLocalStorage('ranking', [
+        ...JSON.parse(localStorage.getItem('ranking') || '[]'),
+        {
+          name,
+          score,
+          picture: `https://www.gravatar.com/avatar/${hash}`,
+
+        }]);
+    }
     const incorrectAnswers = document.querySelectorAll('.incorrect');
     const correctAnswer = document.querySelector('.correct');
     correctAnswer.classList.remove('green');
     incorrectAnswers.forEach((answer) => {
       answer.classList.remove('red');
     });
-
     this.setState((prevState) => ({
       index: prevState.index + 1,
       answered: false,
@@ -235,16 +230,21 @@ class Game extends Component {
 
 Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  hash: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
   isOver: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
   stoppedTimer: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ timer }) => ({
+const mapStateToProps = ({ timer, player }) => ({
   isOver: timer.timerOver,
   stoppedTimer: timer.stoppedTimer,
+  ...player,
 });
 
 export default connect(mapStateToProps)(Game);
