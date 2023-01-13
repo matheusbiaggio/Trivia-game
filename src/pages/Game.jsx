@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import '../css/game.css';
 import { actionCorrectAnswer, actionTimerRestart } from '../redux/actions';
-import {setLocalStorage} from '../services'
+import { setLocalStorage } from '../services';
 
 const NUMBER_TWO = 2;
 const NUMBER_THREE = 3;
@@ -173,14 +173,16 @@ class Game extends Component {
     const { index } = this.state;
     const { history, name, hash, score } = this.props;
     if (index === NUMBER_FOUR) {
-      history.push('/feedback')
-      setLocalStorage('ranking',  [...JSON.parse(localStorage.getItem('ranking') || '[]'), {
-        name,
-        score,
-        picture: `https://www.gravatar.com/avatar/${hash}` , 
-        
-      }])
-    };
+      history.push('/feedback');
+      setLocalStorage('ranking', [
+        ...JSON.parse(localStorage.getItem('ranking') || '[]'),
+        {
+          name,
+          score,
+          picture: `https://www.gravatar.com/avatar/${hash}`,
+
+        }]);
+    }
     const incorrectAnswers = document.querySelectorAll('.incorrect');
     const correctAnswer = document.querySelector('.correct');
     correctAnswer.classList.remove('green');
@@ -246,13 +248,13 @@ Game.propTypes = {
   dispatch: PropTypes.func.isRequired,
   hash: PropTypes.string.isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
   }).isRequired,
   isOver: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  stoppedTimer: PropTypes.number.isRequired
-}
+  stoppedTimer: PropTypes.number.isRequired,
+};
 
 const mapStateToProps = ({ timer, player }) => ({
   isOver: timer.timerOver,
