@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
 import { questionsResponse } from '../../cypress/mocks/questions';
+import { act } from 'react-dom/test-utils';
 
 const email = 'email@email.com';
 const name = 'nome';
@@ -14,6 +15,7 @@ describe('Testar tela de Ranking', () => {
     });
   });
 
+  jest.setTimeout(50000);
   it('Teste para 100% coverage da tela Ranking', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
 
@@ -51,8 +53,12 @@ describe('Testar tela de Ranking', () => {
       while (i < 5) {
         i += 1;
 
-        const correctAnswer = await screen.findByTestId('correct-answer');
-        userEvent.click(correctAnswer);
+        if(i === 1) {
+          await new Promise((r) => setTimeout(r, 32000)); // Tentar arrumar esse um monte de warning;
+        } else {
+          const correctAnswer = await screen.findByTestId('correct-answer');
+          userEvent.click(correctAnswer);
+        }
 
         const nextButton = screen.getByRole('button', { name: /Next/i });
         userEvent.click(nextButton);
@@ -72,5 +78,17 @@ describe('Testar tela de Ranking', () => {
       expect(playerCard).toHaveLength(2);
 
       userEvent.click(buttonHome);
+    });
+
+    it('entrar no ranking sem local storage', async () => {
+      const { history } = renderWithRouterAndRedux(<App />);
+
+      act(() => {
+        localStorage.clear();
+        history.push('/ranking')
+      });
+
+      await screen.findByRole('button', { name: /Home/i });
+      expect(history.location.pathname).toBe('/ranking');
     });
 });
