@@ -45,56 +45,68 @@ class Settings extends Component {
       <div>
         <h1 data-testid="settings-title">Configurações</h1>
         <form>
-          <select
-            name="difficulty"
-            value={ difficulty }
-            onChange={ this.handleChange }
-          >
-            <option hidden defaultValue>Dificuldade</option>
+          <label htmlFor="difficulty">
+            difficulty
+            <select
+              name="difficulty"
+              id="difficulty"
+              value={ difficulty }
+              onChange={ this.handleChange }
+            >
+              <option hidden defaultValue>Dificuldade</option>
 
-            { difficulties.map((dif) => (
-              <option
-                key={ dif }
-                value={ dif }
-              >
-                { dif }
-              </option>
-            )) }
-          </select>
+              { difficulties.map((dif) => (
+                <option
+                  key={ dif }
+                  value={ dif }
+                >
+                  { dif }
+                </option>
+              )) }
+            </select>
+          </label>
 
-          <select
-            name="category"
-            value={ category }
-            onChange={ this.handleChange }
-          >
-            <option hidden defaultValue>Categoria</option>
+          <label htmlFor="category">
+            category
+            <select
+              name="category"
+              id="category"
+              value={ category }
+              onChange={ this.handleChange }
+            >
+              <option hidden defaultValue>Categoria</option>
 
-            { categories.map(({ name, id }) => (
-              <option
-                key={ name }
-                value={ id }
-              >
-                { name }
-              </option>
-            )) }
-          </select>
+              { categories.map(({ name, id }) => (
+                <option
+                  key={ name }
+                  value={ id }
+                >
+                  { name }
+                </option>
+              )) }
+            </select>
+          </label>
 
-          <select
-            name="type"
-            value={ type }
-            onChange={ this.handleChange }
-          >
-            <option hidden defaultValue>Tipo</option>
+          <label htmlFor="type">
+            type
+            <select
+              name="type"
+              id="type"
+              value={ type }
+              onChange={ this.handleChange }
+            >
+              <option hidden defaultValue>Tipo</option>
 
-            { types.map((typ) => (
-              <option
-                key={ typ }
-                value={ typ }
-              >
-                { typ }
-              </option>
-            )) }
-          </select>
+              { types.map((typ) => (
+                <option
+                  key={ typ }
+                  value={ typ }
+                >
+                  { typ }
+                </option>
+              )) }
+            </select>
+          </label>
 
           <button
             type="button"

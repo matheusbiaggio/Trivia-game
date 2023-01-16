@@ -110,7 +110,7 @@ class Game extends Component {
       .map((answer, index) => (
         <button
           disabled={ isOver || answered }
-          className={ correct === 'True' ? 'correct' : 'incorrect' }
+          className="incorrect"
           onClick={ this.handlerClickAnswer }
           key={ `${answer[0]}${index}` }
           type="button"
@@ -122,7 +122,7 @@ class Game extends Component {
     const correctAnswer = [...incorrectAnswers, (
       <button
         disabled={ isOver || answered }
-        className={ correct === 'True' ? 'incorrect' : 'correct' }
+        className="correct"
         onClick={ this.handlerClickAnswer }
         key="correct-answer"
         type="button"
@@ -196,10 +196,8 @@ class Game extends Component {
       case 'medium':
         difficultyPoints = NUMBER_TWO;
         break;
-      case 'hard':
-        difficultyPoints = NUMBER_THREE;
-        break;
       default:
+        difficultyPoints = NUMBER_THREE;
         break;
       }
       const total = NUMBER_TEN + (stoppedTimer * difficultyPoints);
