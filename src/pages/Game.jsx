@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
-import '../css/game.css';
 import { actionCorrectAnswer, actionTimerRestart } from '../redux/actions';
 import { setLocalStorage, fetchQuestions } from '../services';
+import '../styles/Game.css';
 
 const NUMBER_TWO = 2;
 const NUMBER_THREE = 3;
@@ -65,7 +65,7 @@ class Game extends Component {
         disabled={ isOver || answered }
         onClick={ this.handlerClickAnswer }
         data-testid={ correct === 'True' ? 'wrong-answer-0' : 'correct-answer' }
-        className={ correct === 'True' ? 'incorrect' : 'correct' }
+        className={ `answer ${correct === 'True' ? 'incorrect' : 'correct'}` }
         type="button"
         key="false"
       >
@@ -75,7 +75,7 @@ class Game extends Component {
     (
       <button
         disabled={ isOver || answered }
-        className={ correct === 'True' ? 'correct' : 'incorrect' }
+        className={ `answer ${correct === 'True' ? 'correct' : 'incorrect'}` }
         onClick={ this.handlerClickAnswer }
         key="true"
         data-testid={ correct === 'True' ? 'correct-answer' : 'wrong-answer-0' }
@@ -85,8 +85,8 @@ class Game extends Component {
       </button>
     )];
     return (
-      <div>
-        <p data-testid="question-category">{ category }</p>
+      <div className="container-white">
+        <p data-testid="question-category" className="title-game-boolean">{ category }</p>
         <p data-testid="question-text">{ question }</p>
         <div data-testid="answer-options">
           { answers.map((_, index) => answers[twoRandomNumbers[index]]) }
@@ -110,7 +110,7 @@ class Game extends Component {
       .map((answer, index) => (
         <button
           disabled={ isOver || answered }
-          className="incorrect"
+          className="incorrect answer"
           onClick={ this.handlerClickAnswer }
           key={ `${answer[0]}${index}` }
           type="button"
@@ -122,7 +122,7 @@ class Game extends Component {
     const correctAnswer = [...incorrectAnswers, (
       <button
         disabled={ isOver || answered }
-        className="correct"
+        className="correct answer"
         onClick={ this.handlerClickAnswer }
         key="correct-answer"
         type="button"
@@ -134,12 +134,14 @@ class Game extends Component {
     const fourRandomNumbers = this.randomNumbers(NUMBER_FOUR);
     return (
       <div>
-        <p data-testid="question-category">{ category }</p>
-        <p data-testid="question-text">{ question }</p>
-        <div data-testid="answer-options">
-          {
-            correctAnswer.map((_answer, index) => correctAnswer[fourRandomNumbers[index]])
-          }
+        <p data-testid="question-category" className="title-game">{ category }</p>
+        <div className="container-white">
+          <p data-testid="question-text" className="question-text">{ question }</p>
+          <div data-testid="answer-options" className="answer-options">
+            {
+              correctAnswer.map((_answer, index) => correctAnswer[fourRandomNumbers[index]])
+            }
+          </div>
         </div>
       </div>
     );
@@ -208,12 +210,14 @@ class Game extends Component {
   render() {
     const { index, questions, answered, resetTimer } = this.state;
     return (
-      <div>
+      <div className="container-game">
         <Header />
+        <div className="title-trivia-game">Trivia</div>
         { resetTimer && <Timer answered={ answered } /> }
         { Boolean(questions.length) && this.createQuestionElement(questions[index]) }
         { answered && (
           <button
+            className="next-btn"
             onClick={ this.handleClickNext }
             data-testid="btn-next"
             type="button"
