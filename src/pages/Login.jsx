@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormLogin from '../components/FormLogin';
 import { actionResetGame } from '../redux/actions';
+import '../App.css';
 
 class Login extends Component {
   componentDidMount() {
@@ -13,8 +14,10 @@ class Login extends Component {
   render() {
     const { history } = this.props;
     return (
-      <div>
-        <FormLogin history={ history } />
+      <div className="container-login">
+        <div>
+          <FormLogin history={ history } />
+        </div>
       </div>
     );
   }
