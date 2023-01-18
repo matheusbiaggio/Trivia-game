@@ -1,0 +1,126 @@
+header {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.avatar {
+  margin-right: 25px;
+}
+
+.black {
+  color: black;
+}
+
+.fa-star {
+  color: yellow;
+}
+
+.gamer-name {
+  margin-right: 25px;
+}
+
+.score {
+  margin-right: 25px;
+}
+
+.container-game {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gamer-img {
+  border-radius: 100%;
+  width: 150px;
+}
+
+.title-game {
+  background: hsl(183, 100%, 44%);
+  border-radius: 25px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-weight: 700;
+  left: 368px;
+  padding: 15px 20px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  width: 700px;
+}
+
+.title-game-boolean {
+  background: hsl(183, 100%, 44%);
+  border-radius: 25px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-weight: 700;
+  left: 544px;
+  padding: 15px 20px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 233px;
+  width: 350px;
+}
+
+.title-trivia-game {
+  align-items: center;
+  border: 5px solid hsl(158, 61%, 47%);
+  border-radius: 100%;
+  color: white;
+  display: flex;
+  font-size: 25px;
+  height: 120px;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 120px;
+}
+
+.container-white {
+  align-items: center;
+  background-color: rgb(252, 252, 252);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  padding: 100px;
+}
+
+.question-text {
+  font-size: 1.5em;
+  margin-bottom: 30px;
+}
+
+.answer {
+  background-color: white;
+  border-radius: 15px;
+  margin-left: 15px;
+  padding: 15px;
+  text-align: center;
+}
+
+.green {
+  border: 3px solid rgb(6, 240, 15);
+  color: rgb(6, 240, 15);
+
+}
+
+.red {
+  border: 3px solid red;
+  color: red;
+}
+
+.next-btn {
+  background-color: hsl(183, 100%, 44%);
+  border-radius: 15px;
+  color: white;
+  font-weight: 700;
+  margin-top: 15px;
+  padding: 15px 20px;
+}
