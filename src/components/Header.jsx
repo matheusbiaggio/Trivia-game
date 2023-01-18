@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../styles/Game.css';
 
 class Header extends Component {
   render() {
@@ -8,16 +9,21 @@ class Header extends Component {
     return (
       <header>
         <img
+          className="avatar"
           data-testid="header-profile-picture"
           src={ `https://www.gravatar.com/avatar/${hash}` }
           alt="avatar"
         />
         <h2
+          className="gamer-name"
           data-testid="header-player-name"
         >
-          {name}
+          <i
+            className="fas fa-star"
+          />
+          <span>{name}</span>
         </h2>
-        <p>
+        <p className="score">
           {'Score: '}
           <span data-testid="header-score">{score}</span>
         </p>

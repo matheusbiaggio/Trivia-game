@@ -14,13 +14,17 @@ class Timer extends Component {
     this.startTimer();
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     const { timer } = this.state;
-    const { dispatch, answered } = this.props;
+    const { dispatch, answered, event, sumPoints } = this.props;
 
     if (answered) {
       clearInterval(this.timer);
-      dispatch(actionStopTimer(timer));
+
+      await dispatch(actionStopTimer(timer));
+
+      const isCorrect = event && event.target.className.includes('green');
+      if (isCorrect) sumPoints();
     }
 
     if (timer === 0) {
@@ -50,6 +54,16 @@ class Timer extends Component {
 Timer.propTypes = {
   answered: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  event: PropTypes.shape({
+    target: PropTypes.shape({
+      className: PropTypes.string,
+    }),
+  }),
+  sumPoints: PropTypes.func.isRequired,
+};
+
+Timer.defaultProps = {
+  event: undefined,
 };
 
 export default connect()(Timer);

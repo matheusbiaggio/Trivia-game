@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FormLogin from '../components/FormLogin';
 import { actionResetGame } from '../redux/actions';
-import '../App.css';
+import '../styles/App.css';
 
 class Login extends Component {
   componentDidMount() {
