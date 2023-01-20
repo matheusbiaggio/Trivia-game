@@ -1,0 +1,71 @@
+.container-settings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container-settings-content {
+  align-items: center;
+  background-color: rgb(252, 252, 252);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 50px;
+  width: 650px;
+}
+
+.container-settings-content > h1 {
+  background: rgb(0, 186, 196);
+  border-radius: 25px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-weight: 700;
+  padding: 15px 25px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  justify-self: center;
+  position: relative;
+  top: -78px
+}
+
+.container-settings-content > label > span {
+  opacity: 0;
+  position: absolute;
+}
+
+.container-settings-content > label {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.container-settings-content > label > select {
+  width: 80%;
+  font-size: 1.3em;
+  text-align: center;
+  margin: 10px;
+}
+
+.container-settings-content > button {
+  background-color: rgb(0, 186, 196);
+  border-radius: 15px;
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 15px 20px;
+  position: relative;
+  top: 80px;
+  width: 100px;
+  font-size: 1.5em;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.container-settings-content > button:hover {
+  background-color: rgb(0, 150, 158);
+}

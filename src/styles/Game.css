@@ -1,13 +1,19 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 header {
   align-items: center;
   background-color: white;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   width: 100%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .avatar {
-  margin-right: 25px;
+  border-radius: 100%;
 }
 
 .black {
@@ -16,14 +22,6 @@ header {
 
 .fa-star {
   color: yellow;
-}
-
-.gamer-name {
-  margin-right: 25px;
-}
-
-.score {
-  margin-right: 25px;
 }
 
 .container-game {
@@ -53,23 +51,22 @@ header {
 }
 
 .title-game-boolean {
-  background: hsl(183, 100%, 44%);
+  background: rgb(0, 186, 196);
   border-radius: 25px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
   font-weight: 700;
-  left: 544px;
-  padding: 15px 20px;
-  position: absolute;
+  padding: 15px 25px;
   text-align: center;
   text-transform: uppercase;
-  top: 233px;
-  width: 350px;
+  font-size: 1.4em;
+  justify-self: center;
 }
 
 .title-trivia-game {
   align-items: center;
   border: 5px solid hsl(158, 61%, 47%);
+  background-color: #3C1b7a;
   border-radius: 100%;
   color: white;
   display: flex;
@@ -89,20 +86,28 @@ header {
   display: flex;
   flex-direction: column;
   margin-top: 25px;
-  padding: 100px;
+  padding: 0 50px 50px 50px;
+  width: 650px;
 }
 
 .question-text {
   font-size: 1.5em;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .answer {
   background-color: white;
   border-radius: 15px;
-  margin-left: 15px;
   padding: 15px;
   text-align: center;
+  font-size: 1.3em;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.answer:hover {
+  background-color: rgba(0, 186, 196, 0.164);
 }
 
 .green {
@@ -117,10 +122,52 @@ header {
 }
 
 .next-btn {
-  background-color: hsl(183, 100%, 44%);
+  background-color: rgb(0, 186, 196);
   border-radius: 15px;
+  border: none;
   color: white;
   font-weight: 700;
-  margin-top: 15px;
   padding: 15px 20px;
+  position: relative;
+  top: -30px;
+  width: 100px;
+  font-size: 1.5em;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.next-btn:hover {
+  background-color: rgb(0, 150, 158);
+}
+
+.container-answer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.timer {
+  background: rgb(0, 186, 196);
+  border-radius: 25px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-weight: 700;
+  padding: 15px 25px;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  right: 0px;
+  font-size: 1.4em;
+  justify-self: flex-end;
+}
+
+.container-header {
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  position: relative;
+  top: -27px;
+  right: -40px;
+  width: 110%;
 }

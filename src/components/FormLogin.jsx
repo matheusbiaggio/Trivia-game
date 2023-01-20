@@ -50,10 +50,12 @@ class FormLogin extends Component {
     const { email, name, buttonEnabled } = this.state;
     return (
       <div className="main-div-login">
-        <div className="title">
-          Trivia
-        </div>
         <form className="login">
+          <div className="container-title">
+            <div className="title">
+              TRIVIA
+            </div>
+          </div>
           <label htmlFor="email">
             <input
               className="input-bla"
@@ -66,7 +68,6 @@ class FormLogin extends Component {
               type="email"
             />
           </label>
-
           <label htmlFor="name">
             <input
               onChange={ this.handleChange }
@@ -78,7 +79,6 @@ class FormLogin extends Component {
               type="name"
             />
           </label>
-
           <button
             onClick={ this.handleClick }
             disabled={ !buttonEnabled }
@@ -87,7 +87,6 @@ class FormLogin extends Component {
           >
             Play
           </button>
-
           <button
             onClick={ this.handleClickSettings }
             data-testid="btn-settings"

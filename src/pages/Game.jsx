@@ -146,22 +146,39 @@ class Game extends Component {
       <div className="container-game">
         <Header />
         <div className="title-trivia-game">Trivia</div>
-        { resetTimer && <Timer
-          answered={ answered }
-          event={ event }
-          sumPoints={ this.sumPoints }
-        /> }
         { Boolean(allAnswers) && (
-          <div>
-            <p data-testid="question-category">{ category }</p>
-            <p data-testid="question-text">{ question }</p>
-            <div data-testid="answer-options">
-              {
-                allAnswers.map((answer) => {
-                  if (answer !== questionsShuffled.correct_answer) index += 1;
-                  return this.createAnswerButtons(answer, index, answered);
-                })
-              }
+          <div className="container-white">
+            <div className="container-header">
+              <span
+                data-testid="question-category"
+                className="title-game-boolean"
+              >
+                { category }
+              </span>
+              { resetTimer && <Timer
+                answered={ answered }
+                event={ event }
+                sumPoints={ this.sumPoints }
+              /> }
+            </div>
+            <div className="container-white">
+              <p
+                data-testid="question-text"
+                className="question-text"
+              >
+                { question }
+              </p>
+              <div
+                data-testid="answer-options"
+                className="container-answer"
+              >
+                {
+                  allAnswers.map((answer) => {
+                    if (answer !== questionsShuffled.correct_answer) index += 1;
+                    return this.createAnswerButtons(answer, index, answered);
+                  })
+                }
+              </div>
             </div>
           </div>
         ) }
