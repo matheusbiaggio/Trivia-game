@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../styles/Ranking.css';
 
 class Ranking extends Component {
   state = {
@@ -26,34 +27,36 @@ class Ranking extends Component {
   render() {
     const { ranking } = this.state;
     return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <button
-          type="button"
-          onClick={ this.redirectHome }
-          data-testid="btn-go-home"
-        >
-          Home
-        </button>
-        <div>
+      <div className="container-ranking">
+        <div className="container-ranking-content">
+          <h1 data-testid="ranking-title">Ranking</h1>
           <ul>
             {ranking.map(({ name, score, picture }, index) => (
               <li
                 key={ `${name}${index}` }
               >
-                <p data-testid={ `player-name-${index}` }>
-                  {name}
-                </p>
-                <p>
-                  {'Score: '}
-                  <span data-testid={ `player-score-${index}` }>
-                    {score}
-                  </span>
-                </p>
                 <img src={ picture } alt={ name } />
+                <div>
+                  <p data-testid={ `player-name-${index}` }>
+                    {name}
+                  </p>
+                  <p>
+                    {'Score: '}
+                    <span data-testid={ `player-score-${index}` }>
+                      {score}
+                    </span>
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
+          <button
+            type="button"
+            onClick={ this.redirectHome }
+            data-testid="btn-go-home"
+          >
+            Home
+          </button>
         </div>
       </div>
     );

@@ -26,12 +26,16 @@ body {
   display: flex;
   flex-direction: column;
   padding: 100px;
+  width: 600px;
+  height: 450px;
 }
 
 .login input {
   border-radius: 5px;
   margin-bottom: 25px;
   padding: 10px 20px;
+  font-size: 1.2em;
+  width: 100%;
 }
 
 .login button {
@@ -53,20 +57,40 @@ body {
 .title {
   align-items: center;
   border: 5px solid hsl(158, 61%, 47%);
+  background-color: #3C1b7a;
   border-radius: 100%;
   color: white;
   display: flex;
   font-size: 50px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
   justify-content: center;
   margin-bottom: 10px;
   text-align: center;
-  width: 220px;
+  position: relative;
+  bottom: 200px;
 }
 
 .main-div-login {
   align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+}
+
+.login > label {
+  position: relative;
+  top: -150px;
+  display: flex;
+}
+
+.login > button {
+  position: relative;
+  top: -120px;
+  font-size: 1.2em;
+}
+
+.container-title {
+  display: flex;
   justify-content: center;
 }

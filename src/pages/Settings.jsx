@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionChangeUrl } from '../redux/actions';
 import triviaCategories from '../services/triviaCategories';
+import '../styles/Settings.css';
 
 const NUMBER_FIFTY = 50;
 
@@ -17,9 +18,6 @@ class Settings extends Component {
   };
 
   async componentDidMount() {
-    // const response = await fetch('https://opentdb.com/api_category.php');
-    // const data = await response.json();
-    // this.setState({ categories: data.trivia_categories });
     this.setState({ categories: triviaCategories });
   }
 
@@ -42,11 +40,11 @@ class Settings extends Component {
   render() {
     const { difficulty, difficulties, category, categories, type, types } = this.state;
     return (
-      <div>
-        <h1 data-testid="settings-title">Configurações</h1>
-        <form>
+      <div className="container-settings">
+        <form className="container-settings-content">
+          <h1 data-testid="settings-title">Configurações</h1>
           <label htmlFor="difficulty">
-            difficulty
+            <span>Difficulty</span>
             <select
               name="difficulty"
               id="difficulty"
@@ -67,7 +65,7 @@ class Settings extends Component {
           </label>
 
           <label htmlFor="category">
-            category
+            <span>Category</span>
             <select
               name="category"
               id="category"
@@ -86,9 +84,8 @@ class Settings extends Component {
               )) }
             </select>
           </label>
-
           <label htmlFor="type">
-            type
+            <span>Type</span>
             <select
               name="type"
               id="type"

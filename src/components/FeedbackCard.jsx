@@ -7,7 +7,7 @@ class FeedbackCard extends Component {
     const { assertions, score } = this.props;
     return (
       <div>
-        <p>
+        <p className="assertions">
           {'Você acertou '}
           <span
             data-testid="feedback-total-question"
@@ -16,7 +16,7 @@ class FeedbackCard extends Component {
           </span>
           {' perguntas!'}
         </p>
-        <p>
+        <p className="score">
           {'Você fez '}
           <span
             data-testid="feedback-total-score"
